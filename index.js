@@ -1,32 +1,30 @@
-import { monsters} from './monsters.js';
+import { peoples} from './peoples.js';
 
 
-console.log(monsters);
-
-for(let monster of monsters) {
-    showMonster(monster);
+for(let people of peoples) {
+    showMonster(people);
 
 }
 
-function showMonster(monster){
-    const monsterDiv=document.createElement('div');
-    monsterDiv.className="monster";
+function showMonster(people){
+    const peopleDiv=document.createElement('div');
+    peopleDiv.className="people";
 
 
     const img = document.createElement('img');
-    img.src = monster.img;
-    img.alt = monster.name;
+    img.src = people.img;
+    img.alt = people.name;
 
     const name= document.createElement('p');
     name.className='name';
-    name.innerHTML=monster.name;
+    name.innerHTML=people.name;
 
     const email= document.createElement('p');
     email.className='email';
-    email.innerHTML=monster.email; 
+    email.innerHTML=people.email; 
 
-    monsterDiv.append(img, name, email);
-    document.querySelector('.monsters').append(monsterDiv);
+    peopleDiv.append(img, name, email);
+    document.querySelector('.peoples').append(peopleDiv);
 }
 
 notFound();
@@ -39,8 +37,43 @@ function notFound(){
     span.innerText='404';
 
     const h1= document.createElement('h1');
-    h1.innerText='🧟‍♂️ No Monster Found 🧟‍♂️';
+    h1.innerText='🧟‍♂️ No People Found 🧟‍♂️';
 
     notFoundDiv.append(span, h1);
-    document.querySelector('.monsters').append(notFoundDiv);
+    document.querySelector('.peoples').append(notFoundDiv);
 }
+
+
+/**********************/
+/*   search-people  */
+/**********************/
+document.querySelector('#search-people')
+    .addEventListener('keyup', function(e){
+    const keyword = e.target.value.toLowerCase();
+    const peoples = document.querySelectorAll('.people');
+    
+    let notFound = true;
+
+    for(let people of peoples) {
+        const name = people.children[1].innerText.toLowerCase();
+        const email = people.children[2].innerText.toLowerCase();
+
+        if(name.includes(keyword) || email.includes(keyword)){
+            people.style.display = 'block';
+            notFound = false;
+        }else{
+            people.style.display = 'none';
+
+        }
+    }
+    if(notFound) {
+        document.querySelector('.not-found').style.display = 'block';
+    }else{
+        document.querySelector('.not-found').style.display = 'none';
+    }
+
+});
+document.querySelector('#search-people-form').
+    addEventListener('submit', e=>{
+        e.preventDefault();
+    });
